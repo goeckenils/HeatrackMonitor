@@ -7,45 +7,63 @@ class TempGraph extends Component {
 	render() {
 		const data = [
 			{
-				name: 'Page A',
-				uv: 4000,
-				pv: 2400,
+				name: '13:00',
+				tempC: 24.03,
 				amt: 2400
 			},
 			{
-				name: 'Page B',
-				uv: 3000,
-				pv: 1398,
+				name: '14:00',
+				tempC: 25.05,
 				amt: 2210
 			},
 			{
-				name: 'Page C',
-				uv: 2000,
-				pv: 9800,
+				name: '15:00',
+				tempC: 23.04,
 				amt: 2290
 			},
 			{
-				name: 'Page D',
-				uv: 2780,
-				pv: 3908,
+				name: '16:00',
+				tempC: 26.63,
 				amt: 2000
 			},
 			{
-				name: 'Page E',
-				uv: 1890,
-				pv: 4800,
+				name: '17:00',
+				tempC: 28.61,
 				amt: 2181
 			},
 			{
-				name: 'Page F',
-				uv: 2390,
-				pv: 3800,
+				name: '18:00',
+				tempC: 25.97,
 				amt: 2500
 			},
 			{
-				name: 'Page G',
-				uv: 3490,
-				pv: 4300,
+				name: '19:00',
+				tempC: 22.22,
+				amt: 2100
+			},
+			{
+				name: '20:00',
+				tempC: 32.22,
+				amt: 2100
+			},
+			{
+				name: '21:00',
+				tempC: 29.22,
+				amt: 2100
+			},
+			{
+				name: '22:00',
+				tempC: 34.22,
+				amt: 2100
+			},
+			{
+				name: '23:00',
+				tempC: 21.22,
+				amt: 2100
+			},
+			{
+				name: '24:00',
+				tempC: 15.22,
 				amt: 2100
 			}
 		];
@@ -79,9 +97,9 @@ class TempGraph extends Component {
 							<XAxis dataKey="name" />
 							<YAxis />
 							<Tooltip />
-							<Legend />
 							<Line type="monotone" dataKey="pv" stroke="#E84855" />
-							<Line type="monotone" dataKey="uv" stroke="#EFB911" />
+							<Line type="monotone" dataKey="tempC" fillOpacity={1} stroke="#5764ff" fill="#5764ff" />
+							{/* <Line type="monotone" dataKey="tempC" fillOpacity={1} stroke="#EFB911" fill="#EFB911" /> */}
 						</LineChart>
 					</Container>
 				</FlexWrapper>
