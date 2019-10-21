@@ -36,7 +36,7 @@ class Table extends Component {
 			}
 		];
 
-		return <ReactTable data={data} columns={columns} />;
+		return <ReactTable data={data} columns={columns} defaultPageSize={10} />;
 	}
 }
 

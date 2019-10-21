@@ -1,14 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import TempGraph from './components/screens/TempGraph';
+import TableView from './components/screens/TableView';
 import './App.css';
 
 function App() {
 	return (
 		<Router>
-			<div>
-				<TempGraph />
-			</div>
+			<Switch>
+				<Route exact path="/" component={TempGraph} />
+				<Route exact path="/table" component={TableView} />
+			</Switch>
 		</Router>
 	);
 }
