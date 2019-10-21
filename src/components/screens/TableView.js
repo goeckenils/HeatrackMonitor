@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Headerbar, { Header } from '../interface/Headerbar';
+import Headerbar from '../interface/Headerbar';
 import styled from 'styled-components';
 import Table from '../interface/Table';
 class TableView extends Component {
