@@ -1,37 +1,28 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
+import { connect } from 'react-redux'
+import axios from "axios";
+import { addTemp, addTemps } from "../../redux/actions"
 import { createGlobalStyle } from 'styled-components';
 import 'react-table/react-table.css';
 
+const fetchData = (props) => {
+    axios
+        .get('http://localhost:80/temperature')
+		.then((res) => props.addMultiple(res.data))
+}
+
 class Table extends Component {
+
+	componentDidMount() {
+	fetchData(this.props)
+	this.interval = setInterval(() => {
+    	fetchData(this.props)
+	}, 1000)
+	
+}
+
 	render() {
-		const data = [
-			{
-				ip: '435465765',
-				time: '2019-11-14 09:44:35',
-				tempC: 26.34
-			},
-			{
-				ip: '435465765',
-				time: '2019-11-14 09:44:35',
-				tempC: 26.34
-			},
-			{
-				ip: '435465765',
-				time: '2019-11-14 09:44:35',
-				tempC: 26.34
-			},
-			{
-				ip: '435465765',
-				time: '2019-11-14 09:44:35',
-				tempC: 26.34
-			},
-			{
-				ip: '435465765',
-				time: '2019-11-14 09:44:35',
-				tempC: 26.34
-			}
-		];
 
 		const columns = [
 			{
@@ -44,15 +35,34 @@ class Table extends Component {
 			},
 			{
 				Header: 'Time',
-				accessor: 'time'
+				accessor: 'date'
+			},
+			{
+				Header: 'Mac Address',
+				accessor: 'device.mac'
 			}
 		];
 
-		return <ReactTable data={data} columns={columns} defaultPageSize={10} />;
+		return ( 
+			<div>
+				<ReactTable data={this.props.temps} columns={columns} defaultPageSize={10} />
+		</div>
+		);
 	}
 }
+const mapStateToProps = (state) => {
+    return {
+        temps: state.temps
+    }
+}
 
-export default Table;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add: (temp) => dispatch(addTemp(temp)),
+        addMultiple: (temps) => dispatch(addTemps(temps))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 export const GlobalReactTableStyle = createGlobalStyle`
 .ReactTable .rt-thead.-header {

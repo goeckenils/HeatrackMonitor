@@ -4,13 +4,13 @@ import Headerbar from '../interface/Headerbar';
 import styled, {keyframes} from 'styled-components/macro';
 import axios from 'axios';
 import { connect } from "react-redux"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Brush } from 'recharts';
 import moment from 'moment';
 
 
 const fetchData = (props) => {
     axios
-        .get('http://localhost:8080/api/get')
+        .get('http://localhost:5000/temperature')
 		.then((res) => props.addMultiple(res.data))
 }
 
@@ -22,12 +22,12 @@ class TempGraph extends Component {
         fetchData(this.props)
         this.interval = setInterval(() => {
             fetchData(this.props)
-    }, 1000)
+    }, 60000)
 }
 
 	render() {
         const getLastTemp = this.props.temps.find((item, i) => i === this.props.temps.length -1)|| {}
-        const lastTemp = getLastTemp && getLastTemp.tempc && getLastTemp.tempc.toFixed(2)
+        const lastTemp = getLastTemp && getLastTemp.tempC && getLastTemp.tempC.toFixed(2)
         const getStatus = (lastTemp) => {
             if(lastTemp < 30) {
                 return (
@@ -75,20 +75,22 @@ class TempGraph extends Component {
 						</StatusWrapper>
 					</TopWrapper>
 					<Container>
-						<LineChart
+					  <LineChart
 							width={900}
 							height={300}
 							data={this.props.temps}
-							margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+							margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
 						>
-							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="date" tickFormatter={formatLabel} />
-							<YAxis />
-							<Tooltip />
-							{/* <Line type="monotone" dataKey="pv" stroke="#E84855" /> */}
-							<Line type="monotone" dataKey="tempc" fillOpacity={1} stroke="#5764ff" fill="#5764ff" />
-							{/* <Line type="monotone" dataKey="tempC" fillOpacity={1} stroke="#EFB911" fill="#EFB911" /> */}
-						</LineChart>
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis dataKey="date" tickFormatter={formatLabel} domain={[0, 360]} />
+						<YAxis />
+						{/* <Line type="monotone" dataKey="pv" stroke="#E84855" /> */}
+						<Line type="monotone" dataKey="tempC" fillOpacity={0.4} stroke="#5764ff" fill="#5764ff" />
+                        {/* <Line type="monotone" dataKey="date" fillOpacity={1} stroke="#EFB911" fill="#EFB911" /> */}
+                    
+                        <Brush tickFormatter={formatLabel} dataKey="date" height={30} style={{marginTop: "10px"}} stroke="#5764ff" y={260} fill="#f1f1f1" startIndex={10} endIndex={0}>
+                        </Brush>
+                            </LineChart>
 					</Container>
 				</FlexWrapper>
 			</div>
@@ -118,7 +120,10 @@ export const Container = styled.div`
 	/* -webkit-box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 	box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15); */
-	align-items: center;
+    align-items: center;
+    .recharts-brush {
+        margin-top: 10px;
+    }
 `;
 const FlexWrapper = styled.div`
 	display: flex;
@@ -189,8 +194,8 @@ const pulse = ({ color }) => keyframes`
   }
 `;
 export const Circle = styled.div`
-	width: 120px;
-	height: 120px;
+	width: 140px;
+	height: 140px;
 	border-radius: 100px;
 	display: flex;
 	justify-content: center;
