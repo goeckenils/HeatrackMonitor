@@ -12,6 +12,8 @@ export const addTemp = temp => {
 
 }
 
+window.addTemp = addTemp
+
 export const addTemps = temps => {
     return {
         type: ADD_TEMPS, 

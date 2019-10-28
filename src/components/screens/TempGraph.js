@@ -3,27 +3,25 @@ import { addTemp, addTemps } from "../../redux/actions"
 import Headerbar from '../interface/Headerbar';
 import styled, {keyframes} from 'styled-components/macro';
 import axios from 'axios';
+import "../../connection"
 import { connect } from "react-redux"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Brush } from 'recharts';
 import moment from 'moment';
 
+moment.locale('de')
 
 const fetchData = (props) => {
     axios
-        .get('http://localhost:5000/temperature')
+        .get('http://192.168.16.36:5000/temperature')
 		.then((res) => props.addMultiple(res.data))
 }
-
 
 
 class TempGraph extends Component {
 
 	componentDidMount() {
         fetchData(this.props)
-        this.interval = setInterval(() => {
-            fetchData(this.props)
-    }, 60000)
-}
+    }
 
 	render() {
         const getLastTemp = this.props.temps.find((item, i) => i === this.props.temps.length -1)|| {}
@@ -58,13 +56,13 @@ class TempGraph extends Component {
 		};
 		return (
 			<div>
-				<Headerbar />
+				<Headerbar dashactive />
 				<FlexWrapper>
 					<TopWrapper>
 						<StatusWrapper>
 							<Status>
 								<H1>Temperature</H1>
-								<H2>monitoring from headracks</H2>
+								<H2>monitoring from heatracks</H2>
 								<H2>last temp that was measured</H2>
 							</Status>
 						</StatusWrapper>
@@ -88,7 +86,8 @@ class TempGraph extends Component {
 						<Line type="monotone" dataKey="tempC" fillOpacity={0.4} stroke="#5764ff" fill="#5764ff" />
                         {/* <Line type="monotone" dataKey="date" fillOpacity={1} stroke="#EFB911" fill="#EFB911" /> */}
                     
-                        <Brush tickFormatter={formatLabel} dataKey="date" height={30} style={{marginTop: "10px"}} stroke="#5764ff" y={260} fill="#f1f1f1" startIndex={10} endIndex={0}>
+                        <Brush tickFormatter={formatLabel} dataKey="date" height={30} stroke="#5764ff" y={260
+                        } fill="#f1f1f1" startIndex={10} endIndex={0}>
                         </Brush>
                             </LineChart>
 					</Container>
@@ -115,7 +114,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(TempGraph);
 export const Container = styled.div`
 	height: 400px;
 	/* background: #fff; */
-	display: flex;
+    display: flex;
 	justify-content: center;
 	/* -webkit-box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);

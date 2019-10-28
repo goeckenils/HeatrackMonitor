@@ -12,16 +12,16 @@ class Headerbar extends Component {
 			<div>
 				<Header>
 					<Container>
-						<IconWrapper>
+						<DashIconWrapper dashactive={this.props.dashactive}>
 							<Link to="/">
-								<DashIcon dashactive={this.props.dashactive} />
+								<DashIcon  />
 							</Link>
-						</IconWrapper>
-						<IconWrapper>
+						</DashIconWrapper>
+						<TableIconWrapper tableactive={this.props.tableactive}>
 							<Link to="/table">
 								<TableIcon />
 							</Link>
-						</IconWrapper>
+						</TableIconWrapper>
 						<IconWrapper>
 							<WarnIcon />
 						</IconWrapper>
@@ -38,6 +38,7 @@ export const Header = styled.div`
 	background: #5764ff;
 	z-index: 10;
 	height: 100%;
+	width: 70px;
 	position: absolute;
 	display: flex;
 	position: fixed;
@@ -49,6 +50,7 @@ export const Header = styled.div`
 export const Container = styled.div`
 	height: 100%;
 	display: flex;
+	margin-top:20px;
 	align-items: center;
 	flex-direction: column;
 	justify-content: start;
@@ -62,32 +64,68 @@ export const H1 = styled.h1`
 
 const DashIcon = styled(Dash)`
 width: 25px;
+display: flex;
 height: 25px;
 fill: #fff;
-
-/* border-left: 1px solid ${(props) => (props.dashactive ? css`#fff` : css`none`)}; */
 
 
 `;
 const TableIcon = styled(Table)`
 width: 25px;
+display: flex;
 height: 25px;
 fill: #fff;
 /* border-bottom: ${(props) => (props.tablehactive ? css`#fff` : css`none`)}; */
 `;
 const WarnIcon = styled(Warn)`
 width: 25px;
+display: flex;
 height: 25px;
 fill: #fff;
 /* border-bottom: ${(props) => (props.warnactive ? css`#fff` : css`none`)}; */
 `;
 
-const IconWrapper = styled.div`
-	padding: 20px;
+const DashIconWrapper = styled.div`
+	padding: 15px;
 	&:hover {
 		background: rgba(255, 255, 255, 0.1);
-	}
+	} 
+	justify-content: center;
+	align-items: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-radius: 4px;
+	margin-top:10px;
+	background:  ${(props) => (props.dashactive ? css`rgba(0, 0, 0, 0.1)` : css`none`)};
+
+`;
+const IconWrapper = styled.div`
+	padding: 15px;
+	&:hover {
+		background: rgba(255, 255, 255, 0.1);
+	} 
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	margin-top:10px;
+	background:  ${(props) => (props.tableactive ? css`rgba(0, 0, 0, 0.1)` : css`none`)};
+`;
+const TableIconWrapper = styled.div`
+	padding: 15px;
+	&:hover {
+		background: rgba(255, 255, 255, 0.1);
+	} 
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	margin-top:10px;
+	background:  ${(props) => (props.dashactive ? css`rgba(0, 0, 0, 0.1)` : css`none`)};
+	background:  ${(props) => (props.tableactive ? css`rgba(0, 0, 0, 0.1)` : css`none`)};
 `;

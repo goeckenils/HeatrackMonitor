@@ -7,7 +7,7 @@ class TableView extends Component {
 	render() {
 		return (
 			<div>
-				<Headerbar />
+				<Headerbar tableactive />
 				<TableWrapper>
 					<Table />
 				</TableWrapper>

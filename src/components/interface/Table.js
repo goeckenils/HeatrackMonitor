@@ -8,7 +8,7 @@ import 'react-table/react-table.css';
 
 const fetchData = (props) => {
     axios
-        .get('http://localhost:80/temperature')
+        .get('http://192.168.16.36:5000/temperature')
 		.then((res) => props.addMultiple(res.data))
 }
 
@@ -16,11 +16,9 @@ class Table extends Component {
 
 	componentDidMount() {
 	fetchData(this.props)
-	this.interval = setInterval(() => {
-    	fetchData(this.props)
-	}, 1000)
+	}
 	
-}
+
 
 	render() {
 
