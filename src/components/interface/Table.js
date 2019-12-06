@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import { connect } from 'react-redux'
-import axios from "axios";
-import { addTemp, addTemps } from "../../redux/actions"
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { addTemp, addTemps } from '../../redux/actions';
 import { createGlobalStyle } from 'styled-components';
 import 'react-table/react-table.css';
 
 const fetchData = (props) => {
-    axios
-        .get('http://192.168.16.36:5000/temperature')
-		.then((res) => props.addMultiple(res.data))
-}
+	axios.get('http://192.168.43.179:8080/temperature').then((res) => props.addMultiple(res.data));
+};
 
 class Table extends Component {
-
 	componentDidMount() {
-	fetchData(this.props)
+		fetchData(this.props);
 	}
-	
-
 
 	render() {
-
 		const columns = [
 			{
 				Header: 'Ip',
@@ -41,25 +35,25 @@ class Table extends Component {
 			}
 		];
 
-		return ( 
+		return (
 			<div>
 				<ReactTable data={this.props.temps} columns={columns} defaultPageSize={10} />
-		</div>
+			</div>
 		);
 	}
 }
 const mapStateToProps = (state) => {
-    return {
-        temps: state.temps
-    }
-}
+	return {
+		temps: state.temps
+	};
+};
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        add: (temp) => dispatch(addTemp(temp)),
-        addMultiple: (temps) => dispatch(addTemps(temps))
-    }
-}
+	return {
+		add: (temp) => dispatch(addTemp(temp)),
+		addMultiple: (temps) => dispatch(addTemps(temps))
+	};
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 export const GlobalReactTableStyle = createGlobalStyle`
